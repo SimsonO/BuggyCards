@@ -5,6 +5,7 @@ using UnityEngine;
 public class DragAndDropCards : MonoBehaviour
 {
     private bool isDragging;
+    private bool overPlayArea = false;
    
     private GameObject startParent;
 
@@ -25,7 +26,7 @@ public class DragAndDropCards : MonoBehaviour
             Vector2 mousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             transform.position = mousePosition;
         }
-    }
+    }  
 
     public void BeginDrag()
     {
@@ -37,7 +38,7 @@ public class DragAndDropCards : MonoBehaviour
     public void EndDrag()
     {
         isDragging = false;
-        if(PlayAreaIsSelected())
+        if(overPlayArea)
         {
             DropCardInPlayArea();
         }
@@ -45,11 +46,7 @@ public class DragAndDropCards : MonoBehaviour
         {
             MoveCardBackToHand();
         }
-    }
-    private bool PlayAreaIsSelected()
-    {
-        return false;
-    }
+    }  
 
     private void DropCardInPlayArea()
     {
@@ -59,5 +56,25 @@ public class DragAndDropCards : MonoBehaviour
     private void MoveCardBackToHand()
     {
         transform.SetParent(startParent.transform, false);        
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        Debug.Log("over PlayArea");
+        if (collider.gameObject.tag == "PlayArea")
+        {
+            overPlayArea = true;
+          
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "PlayArea")
+        {
+            overPlayArea = false;
+
+            Debug.Log("not over PlayArea");
+        }
     }
 }
