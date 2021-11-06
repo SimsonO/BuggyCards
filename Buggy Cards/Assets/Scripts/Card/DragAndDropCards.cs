@@ -12,7 +12,9 @@ public class DragAndDropCards : MonoBehaviour
     private GameObject canvas;
     private GameObject playArea;
 
-
+    //Event that will be broadcast whenever a card is placed in the Play Are
+    public delegate void NewCardInPlayArea();
+    public static event NewCardInPlayArea OnNewCardInPlayArea;
     private void Start()
     {
         canvas = GameObject.FindGameObjectWithTag("MainCanvas");
@@ -41,6 +43,7 @@ public class DragAndDropCards : MonoBehaviour
         if(overPlayArea)
         {
             DropCardInPlayArea();
+            OnNewCardInPlayArea?.Invoke();
         }
         else
         {
@@ -58,23 +61,20 @@ public class DragAndDropCards : MonoBehaviour
         transform.SetParent(startParent.transform, false);        
     }
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        Debug.Log("over PlayArea");
-        if (collider.gameObject.tag == "PlayArea")
+    private void OnTriggerEnter2D(Collider2D other) 
+    {       
+        if (other.gameObject.tag == "PlayArea")
         {
             overPlayArea = true;
           
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D other) 
     {
-        if (collision.gameObject.tag == "PlayArea")
+        if (other.gameObject.tag == "PlayArea")
         {
             overPlayArea = false;
-
-            Debug.Log("not over PlayArea");
-        }
+        }   
     }
 }
