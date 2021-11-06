@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b67c429cd7f8c754c8201857ab4391c1, type: 3}
-  m_Name: cardDB
+  m_Script: {fileID: 11500000, guid: b87c0a2d322910e45accde91c8f12042, type: 3}
+  m_Name: six
   m_EditorClassIdentifier: 
-  cards:
-  - {fileID: 11400000, guid: 48a341c026df0cf42aecea32b146d78b, type: 2}
-  - {fileID: 11400000, guid: 76808e72fa9506e4098765a9b5bf7d1d, type: 2}
+  cardName: six
+  value: 6

@@ -12,15 +12,15 @@ public class DrawCard : MonoBehaviour
 
     private void Start()
     {
-        numberOfcardsInDB = cardDB.cards.Count;
+        numberOfcardsInDB = cardDB.PlayerCards.Count;
     }
 
     public void SpawnACardInHandArea()
     {
-        int cardID = Random.Range(0, numberOfcardsInDB);        
+        int cardId = Random.Range(0, numberOfcardsInDB);        
         GameObject playerCard = Instantiate(cardPrefab, Vector3.zero, Quaternion.identity);
-        CardDisplay display = playerCard.GetComponent<CardDisplay>();
-        display.SetCardInformation(cardDB.cards[cardID]);
+        PlayerCardDisplay display = playerCard.GetComponent<PlayerCardDisplay>();
+        display.SetCardInformation(cardDB.PlayerCards[cardId]);
         playerCard.transform.SetParent(handArea.transform,false);
     }
 

@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 235982043}
   - component: {fileID: 235982042}
   m_Layer: 0
-  m_Name: OppenentCardCurrentArea
+  m_Name: ActiveGameCardArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1095,8 +1095,9 @@ GameObject:
   - component: {fileID: 1468370276}
   - component: {fileID: 1468370275}
   - component: {fileID: 1468370277}
+  - component: {fileID: 1468370278}
   m_Layer: 0
-  m_Name: OpponentCardNextArea
+  m_Name: GameDeckArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1184,6 +1185,22 @@ MonoBehaviour:
   m_Spacing: {x: 20, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
+--- !u!114 &1468370278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468370273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19047ff241584a4488817b1b2eda57ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameCardPrefab: {fileID: 6495604589212393217, guid: 855971aa81be3e84cae605e6eea02b92, type: 3}
+  ActiveGameCardArea: {fileID: 235982040}
+  deckSize: 4
+  cardDB: {fileID: 11400000, guid: 27f1fbd09f7c93d4dae213b248d47f00, type: 2}
 --- !u!1 &1874084542
 GameObject:
   m_ObjectHideFlags: 0

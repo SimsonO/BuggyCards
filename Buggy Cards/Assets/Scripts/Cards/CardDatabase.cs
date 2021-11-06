@@ -5,6 +5,9 @@ using UnityEngine;
 public class CardDatabase : ScriptableObject
 {
     [SerializeField]
-    public List<Card> cards = new List<Card>();
-  
+    public List<PlayerCard> PlayerCards = new List<PlayerCard>();
+
+    [SerializeField]
+    public List<GameCard> GameCards = new List<GameCard>();
+
 }

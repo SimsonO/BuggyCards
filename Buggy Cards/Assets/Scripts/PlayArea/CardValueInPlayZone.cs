@@ -10,7 +10,7 @@ public class CardValueInPlayZone : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI sumOfCardsDisplay;
-    private CardDisplay[] cardsInPlayArea;
+    private PlayerCardDisplay[] cardsInPlayArea;
 
     private void Start()
     {
@@ -19,8 +19,8 @@ public class CardValueInPlayZone : MonoBehaviour
     private void UpdateSumOfCardValue()
     {
         sumOfCards = 0;
-        cardsInPlayArea = GetComponentsInChildren<CardDisplay>();
-        foreach (CardDisplay card in cardsInPlayArea)
+        cardsInPlayArea = GetComponentsInChildren<PlayerCardDisplay>();
+        foreach (PlayerCardDisplay card in cardsInPlayArea)
         {
             sumOfCards += card.GetCardValue();
         }
