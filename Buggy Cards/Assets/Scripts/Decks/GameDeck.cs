@@ -16,15 +16,13 @@ public class GameDeck : MonoBehaviour
     private CardDatabase cardDB;
     private int numberOfGameCardsInDB;
 
-    void Start()
+    void Awake() //TODO: moveto start when generate Game is out of start in playfieldmanager
     {
         numberOfGameCardsInDB = cardDB.GameCards.Count;
-        gameDeck = new List<GameObject>();
-        GenerateGameDeck();
-        DealCard();
+        gameDeck = new List<GameObject>();        
     }
 
-    private void GenerateGameDeck()
+    public void GenerateGameDeck()
     {
         for (int i = 0; i < deckSize; i++)
         {
@@ -54,5 +52,11 @@ public class GameDeck : MonoBehaviour
     {
         gameDeck[0].transform.SetParent(ActiveGameCardArea.transform, false);
         gameDeck.RemoveAt(0);
+    }
+
+    public int GetNumberOfCardsInDeck()
+    {       
+        int numberOfGameCardsDeck = this.transform.childCount;
+        return numberOfGameCardsDeck;
     }
 }
