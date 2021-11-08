@@ -49,8 +49,23 @@ public class PlayfieldManager : MonoBehaviour
             valueInPlayArea += card.GetCardValue();
         }
         resultChecker.UpdateValueInPlayArea(valueInPlayArea);
+        Debug.Log("sum in PlayArea: " + valueInPlayArea);
+    } 
+      
+    private void StartNewRound()
+    {
+        Debug.Log("Start new round");
+        DiscardActiveGameCard();
+        DiscardPlayArea();
+        GameObject newActiveCard = ReturnNextCardAndSetItAcitve();
+        UpdateValueOfActiveGameCard(newActiveCard);
+        UpdateNumberOfCardsInGameDeck();
+        DealPlayerCard();
+        UpdateNumberOfCardsInHand();
+        Debug.Log("new round is started");
+
     }
-    
+
     private void DiscardActiveGameCard()
     {
         Transform transformOfActiveCard = activeGameCardArea.transform.GetChild(0);
@@ -65,30 +80,18 @@ public class PlayfieldManager : MonoBehaviour
         }
     }
 
-   
 
-    private void StartNewRound()
+    private GameObject ReturnNextCardAndSetItAcitve()
     {
-        DiscardActiveGameCard();
-        DiscardPlayArea();
-        DealGameCard();
-        UpdateValueOfActiveGameCard();
-        UpdateNumberOfCardsInGameDeck();
-        DealPlayerCard();
-        UpdateNumberOfCardsInHand(); 
-        
-    }    
-
-    private void DealGameCard()
-    {
-        gameDeck.GetComponent<GameDeck>().DealCard();       
+        GameObject newActiveCard = gameDeck.GetComponent<GameDeck>().ReturnNextCardAndSetItAcitve();
+        return newActiveCard;
     }
-    private void UpdateValueOfActiveGameCard()
+    private void UpdateValueOfActiveGameCard(GameObject newActiveCard)
     {
-        GameCardDisplay cardDisplay = activeGameCardArea.GetComponentInChildren<GameCardDisplay>();
+        GameCardDisplay cardDisplay = newActiveCard.GetComponent<GameCardDisplay>();
         int valueActiveGameCard = cardDisplay.GetCardValue();
         resultChecker.UpdateValueActiveGameCard(valueActiveGameCard);
-        Debug.Log(valueActiveGameCard);
+        Debug.Log("activeCard: " + valueActiveGameCard);
 
         activeCardValueDisplay.text = Convert.ToString(valueActiveGameCard); //remove
     }
@@ -101,21 +104,23 @@ public class PlayfieldManager : MonoBehaviour
     {
         int numberOfCardsInHand = playerHand.transform.childCount;
         resultChecker.UpdateValueActiveGameCard(numberOfCardsInHand);
+        Debug.Log("cards in Hand: " + numberOfCardsInHand);
     }
 
     private void UpdateNumberOfCardsInGameDeck()
     {
         int numberOfCardsInGameDeck = gameDeck.transform.childCount;
         resultChecker.UpdateNumberOfCardsInGameDeck(numberOfCardsInGameDeck);
+
+        Debug.Log("cards in GameDech: " + numberOfCardsInGameDeck);
     }
 
     private void StartFirstRound()
     {
-        DealGameCard();
-        UpdateValueOfActiveGameCard();
+        GameObject firstCard = ReturnNextCardAndSetItAcitve();
+        UpdateValueOfActiveGameCard(firstCard);
         UpdateNumberOfCardsInGameDeck();        
     }
-
     
 
     private void OnDestroy()
