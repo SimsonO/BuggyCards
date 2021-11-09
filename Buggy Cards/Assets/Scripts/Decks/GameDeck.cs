@@ -48,11 +48,26 @@ public class GameDeck : MonoBehaviour
         return cardObject;
     }
 
-    public void DealCard()
+    public GameObject ReturnNextCardAndSetItAcitve()
+    {
+        GameObject nextCard = GetNextCardAndRemoveItFromDeck();
+        ActivateCard(nextCard);
+        return nextCard;         
+    }
+
+    private GameObject GetNextCardAndRemoveItFromDeck()
+    {
+        GameObject nextCard = gameDeck[0];
+        gameDeck.RemoveAt(0);
+        return nextCard;
+    }
+
+    private void ActivateCard(GameObject card)
     {
         gameDeck[0].transform.SetParent(ActiveGameCardArea.transform, false);
-        gameDeck.RemoveAt(0);
     }
+
+    
 
     public int GetNumberOfCardsInDeck()
     {       
