@@ -1,11 +1,18 @@
-
+using System.Collections.Generic;
 public class ResultChecker
 {
-
-    private int numberOfCardsInHand;
     private int numberOfCardsInGameDeck;
     private int valueInPlayArea;
-    private int valueActiveGameCard;
+    private int valueCardToBeat;
+
+    private List<Card> cardsInPlayArea;
+    private Card cardTobeat;
+
+    public ResultChecker(List<Card> cardsInPlayArea)
+    {
+        this.cardsInPlayArea = cardsInPlayArea;
+        GameDeck.OnNewCardToBeat += UpdateGameValues;
+    }
 
     //Event that will be broadcast whenever active Card is surpassed but Game is not won
     public delegate void ActiveCardSurpassed();
@@ -19,32 +26,26 @@ public class ResultChecker
     public delegate void GameLost();
     public static event GameWon OnGameLost;
 
-    public void UpdateNumberOfCardsInHand(int numberOfCardsInHand)
-    {
-        this.numberOfCardsInHand = numberOfCardsInHand;
-    }
-
-    public void UpdateNumberOfCardsInGameDeck(int numberOfCardsInGameDeck)
+    private void UpdateGameValues(Card card, int numberOfCardsInGameDeck)
     {
         this.numberOfCardsInGameDeck = numberOfCardsInGameDeck;
+        cardTobeat = card;
     }
-    public void UpdateValueInPlayArea(int valueInPlayArea)
+    public void CheckForEndOfRound(int numberOfCardsInHand)
     {
-        this.valueInPlayArea = valueInPlayArea;
-    }    
+        valueInPlayArea = 0;
+        for (int i = 0;i < cardsInPlayArea.Count ;i++)
+        {
+            valueInPlayArea += cardsInPlayArea[i].GetCardValue();
+        }
+        valueCardToBeat = cardTobeat.GetCardValue();
 
-    public void UpdateValueActiveGameCard(int valueActiveGameCard)
-    {
-        this.valueActiveGameCard = valueActiveGameCard;
-    }
 
-    public void CheckForEndOfRound()
-    {
-        if(valueInPlayArea > valueActiveGameCard && numberOfCardsInGameDeck > 0)
+        if (valueInPlayArea > valueCardToBeat && numberOfCardsInGameDeck > 0)
         {
             OnActiveCardSurpassed?.Invoke();
         }
-        else if(valueInPlayArea > valueActiveGameCard && numberOfCardsInGameDeck == 0)
+        else if(valueInPlayArea > valueCardToBeat && numberOfCardsInGameDeck == 0)
         {
             OnGameWon?.Invoke();
         }

@@ -13,7 +13,7 @@ public class DragAndDropCards : MonoBehaviour
     private GameObject playArea;
 
     //Event that will be broadcast whenever a card is placed in the Play Are
-    public delegate void NewCardInPlayArea();
+    public delegate void NewCardInPlayArea(GameObject card);
     public static event NewCardInPlayArea OnNewCardInPlayArea;
     private void Start()
     {
@@ -43,7 +43,7 @@ public class DragAndDropCards : MonoBehaviour
         if(overPlayArea)
         {
             DropCardInPlayArea();
-            OnNewCardInPlayArea?.Invoke();
+            OnNewCardInPlayArea?.Invoke(this.gameObject);
         }
         else
         {

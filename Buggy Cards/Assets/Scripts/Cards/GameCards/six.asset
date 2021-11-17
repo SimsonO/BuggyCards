@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: six
   value: 6
+  prefab: {fileID: 6495604589212393217, guid: 855971aa81be3e84cae605e6eea02b92, type: 3}

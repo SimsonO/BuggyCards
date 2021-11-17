@@ -2,21 +2,21 @@ using UnityEngine;
 using TMPro;
 using System;
 
-public class PlayerCardDisplay : MonoBehaviour
+public class CardDisplay : MonoBehaviour
 {
-    private PlayerCard card;
+    private Card card;
 
     [SerializeField]
     private TextMeshProUGUI valueText;
 
-   public void SetCardInformation(PlayerCard baseCard)
+   public void SetCardInformation(Card baseCard)
    {
         this.card = baseCard;
         valueText.text = Convert.ToString(card.value);
-   }
+   }  
 
-    public int GetCardValue()
+    public Card GetCard()
     {
-        return card.value;
+        return card;
     }
 }
