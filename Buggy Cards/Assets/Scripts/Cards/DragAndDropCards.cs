@@ -9,7 +9,7 @@ public class DragAndDropCards : MonoBehaviour
    
     private GameObject startParent;
 
-    private GameObject canvas;
+    private GameObject playField;
     private GameObject playArea;
 
     //Event that will be broadcast whenever a card is placed in the Play Are
@@ -17,12 +17,13 @@ public class DragAndDropCards : MonoBehaviour
     public static event NewCardInPlayArea OnNewCardInPlayArea;
     private void Start()
     {
-        canvas = GameObject.FindGameObjectWithTag("MainCanvas");
+        playField = GameObject.FindGameObjectWithTag("Playfield");
         playArea = GameObject.FindGameObjectWithTag("PlayArea");
 
     }
     private void Update()
     {
+        
         if (isDragging)
         {
             Vector2 mousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
@@ -32,23 +33,28 @@ public class DragAndDropCards : MonoBehaviour
 
     public void BeginDrag()
     {
-        startParent = transform.parent.gameObject;
-        transform.SetParent(canvas.transform, true);
-        isDragging = true;
+        GameObject parent = this.transform.parent.gameObject;
+        if (parent != playArea)
+        {
+            startParent = transform.parent.gameObject;
+            transform.SetParent(playField.transform, true);
+            isDragging = true;
+        }
+        
     }
 
     public void EndDrag()
     {
-        isDragging = false;
-        if(overPlayArea)
+        if(overPlayArea && isDragging)
         {
             DropCardInPlayArea();
             OnNewCardInPlayArea?.Invoke(this.gameObject);
         }
-        else
+        else if(isDragging)
         {
             MoveCardBackToHand();
         }
+        isDragging = false;
     }  
 
     private void DropCardInPlayArea()
