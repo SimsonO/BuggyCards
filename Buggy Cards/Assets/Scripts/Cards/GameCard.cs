@@ -1,12 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New GameCard", menuName = "Cards/New Game Card")]
-public class GameCard : ScriptableObject
+public class GameCard : Card
 {
-
-    public string cardName;
-    public int value;
-
-    public GameObject cardObject;
-
+    public GameObject prefab;
 }

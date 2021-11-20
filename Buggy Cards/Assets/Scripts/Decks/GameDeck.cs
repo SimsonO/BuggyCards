@@ -4,26 +4,27 @@ using UnityEngine;
 public class GameDeck : MonoBehaviour
 {
     [SerializeField]
-    private GameObject gameCardPrefab;
-    [SerializeField]
     private GameObject ActiveGameCardArea;
 
-    [SerializeField]
-    private int deckSize = 4;
     private List<GameObject> gameDeck;
 
     [SerializeField]
     private CardDatabase cardDB;
     private int numberOfGameCardsInDB;
 
-    void Awake() //TODO: moveto start when generate Game is out of start in playfieldmanager
+    //Event that will be broadcast whenever a new Card is set to beat
+    public delegate void NewCardToBeat(Card card, int numberOfcardsInGameDeck);
+    public static event NewCardToBeat OnNewCardToBeat;
+
+    void Awake() 
     {
         numberOfGameCardsInDB = cardDB.GameCards.Count;
         gameDeck = new List<GameObject>();        
     }
-
-    public void GenerateGameDeck()
+       
+    public void GenerateGameDeck(int deckSize)
     {
+        gameDeck = new List<GameObject>();
         for (int i = 0; i < deckSize; i++)
         {
             GameCard card =  GetRandomCardFromDB();
@@ -41,33 +42,30 @@ public class GameDeck : MonoBehaviour
 
     private GameObject GenerateGameCardObject(GameCard card)
     {
-        GameObject cardObject = Instantiate(gameCardPrefab, Vector3.zero, Quaternion.identity);
-        GameCardDisplay display = cardObject.GetComponent<GameCardDisplay>();
+        GameObject cardObject = Instantiate(card.prefab, Vector3.zero, Quaternion.identity);
+        CardDisplay display = cardObject.GetComponent<CardDisplay>();
         display.SetCardInformation(card);
         cardObject.transform.SetParent(this.transform, false);
         return cardObject;
+    }  
+
+    public void DiscardActiveCard()
+    {
+        while (ActiveGameCardArea.transform.childCount > 0)
+        {
+            DestroyImmediate(ActiveGameCardArea.transform.GetChild(0).gameObject);
+        }
     }
 
-    public GameObject ReturnNextCardAndSetItAcitve()
+    public void ActivateNextCard()
     {
-        GameObject nextCard = GetNextCardAndRemoveItFromDeck();
-        ActivateCard(nextCard);
-        return nextCard;         
-    }
-
-    private GameObject GetNextCardAndRemoveItFromDeck()
-    {
-        GameObject nextCard = gameDeck[0];
+        CardDisplay display = gameDeck[0].GetComponent<CardDisplay>();
+        Card card = display.GetCard();
+        gameDeck[0].transform.SetParent(ActiveGameCardArea.transform, false);        
         gameDeck.RemoveAt(0);
-        return nextCard;
-    }
-
-    private void ActivateCard(GameObject card)
-    {
-        gameDeck[0].transform.SetParent(ActiveGameCardArea.transform, false);
-    }
-
-    
+        int numberOfCardInGameDeck = gameDeck.Count;
+        OnNewCardToBeat?.Invoke(card, numberOfCardInGameDeck);
+    }    
 
     public int GetNumberOfCardsInDeck()
     {       
