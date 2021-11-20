@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Deck
 {
-       private List<PlayerCard> deck;
+    private List<PlayerCard> deck;
 
     private CardDatabase cardDB;
     private int numberOfPlayerCardsInDB;
