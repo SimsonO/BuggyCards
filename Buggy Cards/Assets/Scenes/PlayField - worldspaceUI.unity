@@ -207,7 +207,7 @@ GameObject:
   - component: {fileID: 288697711}
   m_Layer: 5
   m_Name: Canvas - Hand and UI
-  m_TagString: Untagged
+  m_TagString: HandUICanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -453,7 +453,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_StartCorner: 2
+  m_StartCorner: 3
   m_StartAxis: 1
   m_CellSize: {x: 160, y: 250}
   m_Spacing: {x: 20, y: 0}
@@ -504,9 +504,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b44a9cf87fc9f4d8bc9cf200de9c79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deckSize: 6
+  deckSize: 8
   gameDeckSize: 4
-  startHandSize: 3
+  startHandSize: 4
   cardDB: {fileID: 11400000, guid: 27f1fbd09f7c93d4dae213b248d47f00, type: 2}
 --- !u!114 &492305183
 MonoBehaviour:
@@ -849,7 +849,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_StartCorner: 2
+  m_StartCorner: 1
   m_StartAxis: 1
   m_CellSize: {x: 160, y: 250}
   m_Spacing: {x: 20, y: 0}
@@ -930,7 +930,6 @@ MonoBehaviour:
   hand: {fileID: 349226471}
   postitionFirstCard: {x: 0, y: 0, z: 0}
   offsetCards: {x: 40, y: -25, z: 0}
-  deckSize: 5
   cardDB: {fileID: 11400000, guid: 27f1fbd09f7c93d4dae213b248d47f00, type: 2}
 --- !u!1 &1907696793
 GameObject:
