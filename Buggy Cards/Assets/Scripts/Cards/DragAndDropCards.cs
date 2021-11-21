@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class DragAndDropCards : MonoBehaviour
 {
     private bool isDragging;
     private bool overPlayArea = false;
+
+    private Plane playfieldPlane;
    
     private GameObject startParent;
 
@@ -19,6 +22,8 @@ public class DragAndDropCards : MonoBehaviour
     {
         playField = GameObject.FindGameObjectWithTag("Playfield");
         playArea = GameObject.FindGameObjectWithTag("PlayArea");
+        playfieldPlane = new Plane(Vector3.forward, Vector3.zero);
+
 
     }
     private void Update()
@@ -26,8 +31,14 @@ public class DragAndDropCards : MonoBehaviour
         
         if (isDragging)
         {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            float rayLenght;
+            playfieldPlane.Raycast(ray, out rayLenght);
+
+            Vector3 mouseOnPlane = ray.GetPoint(rayLenght);
+
             Vector2 mousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            transform.position = mousePosition;
+            transform.position = mouseOnPlane;// mousePosition;
         }
     }  
 
@@ -37,7 +48,7 @@ public class DragAndDropCards : MonoBehaviour
         if (parent != playArea)
         {
             startParent = transform.parent.gameObject;
-            transform.SetParent(playField.transform, true);
+            transform.SetParent(playField.transform, false);
             isDragging = true;
         }
         
