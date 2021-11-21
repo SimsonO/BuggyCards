@@ -34,12 +34,10 @@ public class PlayfieldManager : MonoBehaviour
         resultChecker.CheckForEndOfRound(numberOfCardInHand);
     }
 
-    public void SpawnCardInHand(PlayerCard card)
+    public void AddCardToHand(GameObject cardObject)
     {
-        GameObject cardObject = Instantiate(card.prefab, Vector3.zero, Quaternion.identity);
-        CardDisplay display = cardObject.GetComponent<CardDisplay>();
-        display.SetCardInformation(card);
         cardObject.transform.SetParent(playerHandArea.transform, false);
+        Card card = cardObject.GetComponent<CardDisplay>().GetCard();
         hand.Add(card);
     }
 

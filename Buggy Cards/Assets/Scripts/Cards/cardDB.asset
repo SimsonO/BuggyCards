@@ -15,6 +15,8 @@ MonoBehaviour:
   PlayerCards:
   - {fileID: 11400000, guid: 48a341c026df0cf42aecea32b146d78b, type: 2}
   - {fileID: 11400000, guid: 76808e72fa9506e4098765a9b5bf7d1d, type: 2}
+  - {fileID: 11400000, guid: 90c68b0ba3e77d849b9e93128a9b12f3, type: 2}
   GameCards:
   - {fileID: 11400000, guid: 5120c46db57693a4fa2eee84c7e46406, type: 2}
   - {fileID: 11400000, guid: 3cc56007177f8b241b97956e14ac3c10, type: 2}
+  - {fileID: 11400000, guid: e28b195c5f8807741a38a20ecfabb0af, type: 2}

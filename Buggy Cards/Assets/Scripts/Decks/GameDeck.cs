@@ -66,10 +66,4 @@ public class GameDeck : MonoBehaviour
         int numberOfCardInGameDeck = gameDeck.Count;
         OnNewCardToBeat?.Invoke(card, numberOfCardInGameDeck);
     }    
-
-    public int GetNumberOfCardsInDeck()
-    {       
-        int numberOfGameCardsDeck = this.transform.childCount;
-        return numberOfGameCardsDeck;
-    }
 }

@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameStateManager : MonoBehaviour
-{
-    private PlayfieldManager playfieldManager;
-    
-    private Deck deck;
+{    
+    private PlayerDeck playerDeck;
     [SerializeField]
     private int deckSize = 6;
     private GameDeck gameDeck;
@@ -24,9 +22,8 @@ public class GameStateManager : MonoBehaviour
     public static event InitiateDiscardPhase OnInitiateDiscardPhase;
 
     private void Awake()
-    {
-        playfieldManager = GetComponent<PlayfieldManager>();
-        deck = new Deck(cardDB, playfieldManager);
+    {   
+        playerDeck = FindObjectOfType<PlayerDeck>();
         gameDeck = FindObjectOfType<GameDeck>();
     }
 
@@ -40,9 +37,9 @@ public class GameStateManager : MonoBehaviour
 
     private void StartTheGame()
     {
-        deck.GenerateGameDeck(deckSize);
+        playerDeck.GeneratePlayerDeck(deckSize);
         gameDeck.GenerateGameDeck(gameDeckSize);
-        deck.DrawNextXCards(startHandSize);
+        playerDeck.DrawNextXCards(startHandSize);
         gameDeck.ActivateNextCard();
     }
 
@@ -51,7 +48,7 @@ public class GameStateManager : MonoBehaviour
         OnInitiateDiscardPhase?.Invoke();
         gameDeck.DiscardActiveCard();
         gameDeck.ActivateNextCard();
-        deck.DrawNextXCards(1);
+        playerDeck.DrawNextXCards(1);
     }
     private void InitiateGameLoss()
     {

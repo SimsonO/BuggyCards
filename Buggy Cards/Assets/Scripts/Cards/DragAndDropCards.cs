@@ -28,17 +28,14 @@ public class DragAndDropCards : MonoBehaviour
     }
     private void Update()
     {
-        
         if (isDragging)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             float rayLenght;
             playfieldPlane.Raycast(ray, out rayLenght);
 
-            Vector3 mouseOnPlane = ray.GetPoint(rayLenght);
-
-            Vector2 mousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            transform.position = mouseOnPlane;// mousePosition;
+            Vector3 mouseOnPlane = ray.GetPoint(rayLenght);            
+            transform.position = mouseOnPlane;
         }
     }  
 
