@@ -57,9 +57,9 @@ public class PlayerDeck : MonoBehaviour
         for (int i = n-1; i >= n - x ; i--)
         {
             GameObject card = playerDeck[i];
-            //MoveCard            
+            card.GetComponent<DrawPlayerCardTween>().StartCardDrawTween();           
             playerDeck.Remove(card);
-            playfieldManager.AddCardToHand(card);
+            //playfieldManager.AddCardToHand(card);
         }
     }
 }
