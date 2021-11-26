@@ -17,6 +17,20 @@ public class GameStateManager : MonoBehaviour
     [SerializeField]
     private CardDatabase cardDB;
 
+    [SerializeField]
+    private GameObject bugPrefab;
+    [SerializeField]
+    private GameObject startPositionBug;
+    [SerializeField]
+    private GameObject endPositionBug;
+
+    private GameObject playfield;
+
+    private int roundCounter = 0;
+
+    private bool gameActive = false;
+
+
     //Event that will be broadcast whenever Cards from last Round should be discarded
     public delegate void InitiateDiscardPhase();
     public static event InitiateDiscardPhase OnInitiateDiscardPhase;
@@ -25,6 +39,7 @@ public class GameStateManager : MonoBehaviour
     {   
         playerDeck = FindObjectOfType<PlayerDeck>();
         gameDeck = FindObjectOfType<GameDeck>();
+        playfield = GameObject.FindGameObjectWithTag("Playfield");
     }
 
     private void Start()
@@ -41,6 +56,7 @@ public class GameStateManager : MonoBehaviour
         gameDeck.GenerateGameDeck(gameDeckSize);
         playerDeck.DrawNextXCards(startHandSize);
         gameDeck.ActivateNextCard();
+        gameActive = true;
     }
 
     private void StartNewRound()
@@ -49,9 +65,35 @@ public class GameStateManager : MonoBehaviour
         gameDeck.DiscardActiveCard();
         gameDeck.ActivateNextCard();
         playerDeck.DrawNextXCards(1);
+        roundCounter++;
+        if(roundCounter == 1)
+        {
+            StartCoroutine(LetTheBugsOut());
+        }
+    }
+     
+
+    IEnumerator LetTheBugsOut()
+    {
+        while (gameActive)
+        {
+            LetOneBugOut();
+            yield return new WaitForSeconds(5);
+        }
+    }
+
+    private void LetOneBugOut()
+    {
+        GameObject bug = Instantiate(bugPrefab, startPositionBug.transform.position, Quaternion.identity);
+        bug.transform.SetParent(playfield.transform, false);
+        BugController bugController = bug.GetComponent<BugController>();
+        bugController.SetDeck(playerDeck);
+        bugController.SetLeavePosition(endPositionBug.transform.position);
+        bugController.MoveToDeck();
     }
     private void InitiateGameLoss()
     {
+        gameActive = false;
         Debug.Log("you lost the game");
         //TODO:
         //show loose screen
@@ -59,6 +101,7 @@ public class GameStateManager : MonoBehaviour
     }
     private void InitiateGameWin()
     {
+        gameActive = false;
         Debug.Log("You won the Game");
         //TODO:
         //show win screen

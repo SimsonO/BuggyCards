@@ -26,7 +26,7 @@ public class DrawPlayerCardTween : MonoBehaviour
              .SetEase(Ease.OutSine)
              .OnComplete(AddCardTohand);
         DrawCardTween
-            .Append(transform.DOMove(handPosition.transform.position, 3));
+            .Append(transform.DOMove(handPosition.transform.position, 1));
         //DrawCardTween
           //  .Insert(0, transform.DOLookAt(mainCamera.transform.position, 2));
     }

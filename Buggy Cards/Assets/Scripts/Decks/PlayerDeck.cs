@@ -3,10 +3,6 @@ using UnityEngine;
 
 public class PlayerDeck : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject hand;
-    private PlayfieldManager playfieldManager;
-
     private List<GameObject> playerDeck;
     [SerializeField]
     private Vector3 postitionFirstCard;
@@ -18,7 +14,6 @@ public class PlayerDeck : MonoBehaviour
     private int numberOfGameCardsInDB;
     void Awake()
     {
-        playfieldManager = FindObjectOfType<PlayfieldManager>();
         numberOfGameCardsInDB = cardDB.PlayerCards.Count;
         playerDeck = new List<GameObject>();
         postitionFirstCard = this.transform.position;
@@ -62,4 +57,19 @@ public class PlayerDeck : MonoBehaviour
             //playfieldManager.AddCardToHand(card);
         }
     }
+    public int GetNumberOfCardsInPlayerDeck()
+    {
+        return playerDeck.Count;
+    }
+
+    public GameObject GetCardToBeEatenByBug()
+    {
+        int i = Random.Range(0, playerDeck.Count - 1);
+        GameObject card = playerDeck[i];
+        playerDeck.Remove(card);                
+        return card; 
+    }
+
+    
+
 }

@@ -12,7 +12,7 @@ public class DragAndDropCards : MonoBehaviour
    
     private GameObject startParent;    
 
-    private GameObject playField;
+    private GameObject playfield;
     private GameObject playArea;
     private GameObject handArea;
 
@@ -21,7 +21,7 @@ public class DragAndDropCards : MonoBehaviour
     public static event NewCardInPlayArea OnNewCardInPlayArea;
     private void Start()
     {
-        playField = GameObject.FindGameObjectWithTag("Playfield");
+        playfield = GameObject.FindGameObjectWithTag("Playfield");
         playArea = GameObject.FindGameObjectWithTag("PlayArea");
         handArea = GameObject.FindGameObjectWithTag("HandArea");
         playfieldPlane = new Plane(Vector3.forward, Vector3.zero);
@@ -47,7 +47,7 @@ public class DragAndDropCards : MonoBehaviour
         if (parent == handArea)
         {
             startParent = transform.parent.gameObject;
-            transform.SetParent(playField.transform, false);
+            transform.SetParent(playfield.transform, false);
             isDragging = true;
         }
         
