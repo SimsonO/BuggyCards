@@ -36,9 +36,9 @@ public class ResultChecker
         valueInPlayArea = 0;
         for (int i = 0;i < cardsInPlayArea.Count ;i++)
         {
-            valueInPlayArea += cardsInPlayArea[i].GetCardValue();
+            valueInPlayArea += cardsInPlayArea[i].value;
         }
-        valueCardToBeat = cardTobeat.GetCardValue();
+        valueCardToBeat = cardTobeat.value;
 
 
         if (valueInPlayArea > valueCardToBeat && numberOfCardsInGameDeck > 0)

@@ -900,7 +900,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deckSize: 8
-  gameDeckSize: 4
+  gameDeckSize: 5
   startHandSize: 4
   cardDB: {fileID: 11400000, guid: 27f1fbd09f7c93d4dae213b248d47f00, type: 2}
   bugPrefab: {fileID: 3818517486729697274, guid: 483124710d972b042891cde6f1a7e8cd, type: 3}
@@ -1380,6 +1380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActiveGameCardArea: {fileID: 235982040}
   cardDB: {fileID: 11400000, guid: 27f1fbd09f7c93d4dae213b248d47f00, type: 2}
+  maxDeckSum: 35
 --- !u!1 &1874084542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1441,6 +1442,7 @@ MonoBehaviour:
   postitionFirstCard: {x: 0, y: 0, z: 0}
   offsetCards: {x: 40, y: -25, z: 0}
   cardDB: {fileID: 11400000, guid: 27f1fbd09f7c93d4dae213b248d47f00, type: 2}
+  minDeckSum: 40
 --- !u!1 &1907696793
 GameObject:
   m_ObjectHideFlags: 0

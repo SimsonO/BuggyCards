@@ -12,6 +12,9 @@ public class GameDeck : MonoBehaviour
     private CardDatabase cardDB;
     private int numberOfGameCardsInDB;
 
+    [SerializeField]
+    private int maxDeckSum;
+
     //Event that will be broadcast whenever a new Card is set to beat
     public delegate void NewCardToBeat(Card card, int numberOfcardsInGameDeck);
     public static event NewCardToBeat OnNewCardToBeat;
@@ -24,12 +27,21 @@ public class GameDeck : MonoBehaviour
        
     public void GenerateGameDeck(int deckSize)
     {
-        gameDeck = new List<GameObject>();
+        List<GameCard> deck = new List<GameCard>();
+        int deckSum = 0;
         for (int i = 0; i < deckSize; i++)
         {
             GameCard card =  GetRandomCardFromDB();
-            GameObject gameCard = GenerateGameCardObject(card);
-            gameDeck.Add(gameCard);
+            deck.Add(card);
+            deckSum += card.value;
+        }
+        if (deckSum < maxDeckSum)
+        {
+            SpawnGameDeck(deck);
+        }
+        else
+        {
+            GenerateGameDeck(deckSize);
         }
     }
 
@@ -38,6 +50,17 @@ public class GameDeck : MonoBehaviour
         int cardId = Random.Range(0, numberOfGameCardsInDB);
         GameCard card = cardDB.GameCards[cardId];
         return card;
+    }
+
+    private void SpawnGameDeck(List<GameCard> deck)
+    {
+        gameDeck = new List<GameObject>();
+        for (int i = 0; i < deck.Count; i++)
+        {
+            GameCard card = deck[i];
+            GameObject gameCard = GenerateGameCardObject(card);
+            gameDeck.Add(gameCard);
+        }
     }
 
     private GameObject GenerateGameCardObject(GameCard card)

@@ -8,7 +8,24 @@ public class BugController : MonoBehaviour
     PlayerDeck deck;
 
     private Vector3 leavePosition;
-    
+
+    [SerializeField]
+    private float timeToMoveToDeck;
+    [SerializeField]
+    private float timeToLeavePlayfield;
+    [SerializeField]
+    private float timeToMoveToCard;
+
+    private AudioSource bugAudio;
+    [SerializeField]
+    private AudioClip bugCrawl;
+    [SerializeField]
+    private AudioClip bugEat;
+
+    private void Start()
+    {
+        bugAudio = GetComponent<AudioSource>();
+    }
     public void SetDeck(PlayerDeck deck)
     {
         this.deck = deck;
@@ -19,7 +36,7 @@ public class BugController : MonoBehaviour
     }
     public void MoveToDeck()
     {
-        transform.DOMove(deck.transform.position, 6, false).OnComplete(ChooseCardAndEatIt);
+        transform.DOMove(deck.transform.position, timeToMoveToDeck, false).OnComplete(ChooseCardAndEatIt);
     }
 
     private void ChooseCardAndEatIt()
@@ -27,7 +44,7 @@ public class BugController : MonoBehaviour
         if(deck.GetNumberOfCardsInPlayerDeck() >0)
         {
             GameObject card = deck.GetCardToBeEatenByBug();
-            transform.DOMove(card.transform.position, 0.5f, false).OnComplete(() => EatCard(card));            
+            transform.DOMove(card.transform.position, timeToMoveToCard, false).OnComplete(() => EatCard(card));            
         }
         else
         {
@@ -38,6 +55,7 @@ public class BugController : MonoBehaviour
 
     private void EatCard(GameObject card)
     {
+        bugAudio.PlayOneShot(bugEat);
         //StartPArticles
         Destroy(card);
         LeaveThePlayfield();
@@ -45,7 +63,7 @@ public class BugController : MonoBehaviour
     
     private void LeaveThePlayfield()
     {
-        transform.DOMove(leavePosition, 4, false).OnComplete(DestroyBug);
+        transform.DOMove(leavePosition, timeToLeavePlayfield, false).OnComplete(DestroyBug);
     }
 
     private void DestroyBug()
