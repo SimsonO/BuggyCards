@@ -10,45 +10,44 @@ public class DragAndDropCards : MonoBehaviour
 
     private Plane playfieldPlane;
    
-    private GameObject startParent;
+    private GameObject startParent;    
 
-    private GameObject playField;
+    private GameObject playfield;
     private GameObject playArea;
+    private GameObject handArea;
 
     //Event that will be broadcast whenever a card is placed in the Play Are
     public delegate void NewCardInPlayArea(GameObject card);
     public static event NewCardInPlayArea OnNewCardInPlayArea;
     private void Start()
     {
-        playField = GameObject.FindGameObjectWithTag("Playfield");
+        playfield = GameObject.FindGameObjectWithTag("Playfield");
         playArea = GameObject.FindGameObjectWithTag("PlayArea");
+        handArea = GameObject.FindGameObjectWithTag("HandArea");
         playfieldPlane = new Plane(Vector3.forward, Vector3.zero);
 
 
     }
     private void Update()
     {
-        
         if (isDragging)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             float rayLenght;
             playfieldPlane.Raycast(ray, out rayLenght);
 
-            Vector3 mouseOnPlane = ray.GetPoint(rayLenght);
-
-            Vector2 mousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            transform.position = mouseOnPlane;// mousePosition;
+            Vector3 mouseOnPlane = ray.GetPoint(rayLenght);            
+            transform.position = mouseOnPlane;
         }
     }  
 
     public void BeginDrag()
     {
         GameObject parent = this.transform.parent.gameObject;
-        if (parent != playArea)
+        if (parent == handArea)
         {
             startParent = transform.parent.gameObject;
-            transform.SetParent(playField.transform, false);
+            transform.SetParent(playfield.transform, false);
             isDragging = true;
         }
         
