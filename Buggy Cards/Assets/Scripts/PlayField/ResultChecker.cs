@@ -24,7 +24,7 @@ public class ResultChecker
 
     //Event that will be broadcast whenever active Card is not surpassed and Hand is empty -> game is lost
     public delegate void GameLost();
-    public static event GameWon OnGameLost;
+    public static event GameLost OnGameLost;
 
     private void UpdateGameValues(Card card, int numberOfCardsInGameDeck)
     {

@@ -7,13 +7,16 @@ public class CardDisplay : MonoBehaviour
     private Card card;
 
     [SerializeField]
-    private TextMeshProUGUI valueText;
+    private TextMeshProUGUI valueText1;
+    [SerializeField]
+    private TextMeshProUGUI valueText2;
 
-   public void SetCardInformation(Card baseCard)
+    public void SetCardInformation(Card baseCard)
    {
         this.card = baseCard;
-        valueText.text = Convert.ToString(card.value);
-   }  
+        valueText1.text = Convert.ToString(card.value);
+        valueText2.text = Convert.ToString(card.value);
+    }  
 
     public Card GetCard()
     {

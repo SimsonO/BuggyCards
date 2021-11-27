@@ -50,10 +50,10 @@ public class GameStateManager : MonoBehaviour
         ResultChecker.OnActiveCardSurpassed += StartNewRound;
         ResultChecker.OnGameLost += InitiateGameLoss;
         ResultChecker.OnGameWon += InitiateGameWin;
-        StartTheGame();
+        PlayerDeck.OnGameLost += InitiateGameLoss; 
     }
 
-    private void StartTheGame()
+    public void StartTheGame()
     {
         playerDeck.GeneratePlayerDeck(deckSize);
         gameDeck.GenerateGameDeck(gameDeckSize);
@@ -116,5 +116,6 @@ public class GameStateManager : MonoBehaviour
         ResultChecker.OnActiveCardSurpassed -= StartNewRound;
         ResultChecker.OnGameLost -= InitiateGameLoss;
         ResultChecker.OnGameWon -= InitiateGameWin;
+        PlayerDeck.OnGameLost -= InitiateGameLoss;
     }
 }

@@ -14,6 +14,11 @@ public class PlayerDeck : MonoBehaviour
     private int numberOfGameCardsInDB;
     [SerializeField]
     private int minDeckSum;
+
+    //Event that will be broadcast whenever active Card is not surpassed and Hand is empty -> game is lost
+    public delegate void GameLost();
+    public static event GameLost OnGameLost;
+
     void Awake()
     {
         numberOfGameCardsInDB = cardDB.PlayerCards.Count;
@@ -79,6 +84,10 @@ public class PlayerDeck : MonoBehaviour
                 card.GetComponent<DrawPlayerCardTween>().StartCardDrawTween();
                 playerDeck.Remove(card);
             }
+        }
+        else
+        {
+            OnGameLost?.Invoke();
         }
         
     }
