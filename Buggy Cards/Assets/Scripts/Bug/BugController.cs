@@ -22,6 +22,9 @@ public class BugController : MonoBehaviour
     [SerializeField]
     private AudioClip bugEat;
 
+    private Sequence moveToDeck;
+    private Sequence moveToCard;
+
     private void Start()
     {
         bugAudio = GetComponent<AudioSource>();
@@ -36,7 +39,12 @@ public class BugController : MonoBehaviour
     }
     public void MoveToDeck()
     {
-        transform.DOMove(deck.transform.position, timeToMoveToDeck, false).OnComplete(ChooseCardAndEatIt);
+        transform.rotation = Quaternion.Euler(0, 0, 150);
+        moveToDeck =  DOTween.Sequence();
+        moveToDeck
+            .Append(transform.DOMove(deck.transform.position, timeToMoveToDeck, false))
+            //.Insert(0,transform.DOLookAt(deck.transform.position, 1,AxisConstraint.W,Vector3.forward))
+            .OnComplete(ChooseCardAndEatIt);
     }
 
     private void ChooseCardAndEatIt()
@@ -63,6 +71,7 @@ public class BugController : MonoBehaviour
     
     private void LeaveThePlayfield()
     {
+        transform.rotation = Quaternion.Euler(0, 0, 180);
         transform.DOMove(leavePosition, timeToLeavePlayfield, false).OnComplete(DestroyBug);
     }
 

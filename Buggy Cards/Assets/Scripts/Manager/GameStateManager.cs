@@ -18,6 +18,9 @@ public class GameStateManager : MonoBehaviour
     private CardDatabase cardDB;
 
     [SerializeField]
+    private float timeUntilNextBug;
+
+    [SerializeField]
     private GameObject bugPrefab;
     [SerializeField]
     private GameObject startPositionBug;
@@ -78,13 +81,13 @@ public class GameStateManager : MonoBehaviour
         while (gameActive)
         {
             LetOneBugOut();
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(timeUntilNextBug);
         }
     }
 
     private void LetOneBugOut()
     {
-        GameObject bug = Instantiate(bugPrefab, startPositionBug.transform.position, Quaternion.identity);
+        GameObject bug = Instantiate(bugPrefab, startPositionBug.transform.position, Quaternion.Euler(0,0,180));
         bug.transform.SetParent(playfield.transform, false);
         BugController bugController = bug.GetComponent<BugController>();
         bugController.SetDeck(playerDeck);
