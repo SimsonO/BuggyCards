@@ -24,7 +24,14 @@ public class GameDeck : MonoBehaviour
         numberOfGameCardsInDB = cardDB.GameCards.Count;
         gameDeck = new List<GameObject>();        
     }
-       
+
+    private void Start()
+    {
+        GameStateManager.OnInitiateDiscardPhase += DiscardActiveCard;
+        GameStateManager.OnGameDidEnd += DiscardActiveCard;
+        GameStateManager.OnGameDidEnd += DiscardGameDeck;
+    }
+
     public void GenerateGameDeck(int deckSize)
     {
         List<GameCard> deck = new List<GameCard>();
@@ -72,7 +79,7 @@ public class GameDeck : MonoBehaviour
         return cardObject;
     }  
 
-    public void DiscardActiveCard()
+    private void DiscardActiveCard()
     {
         while (ActiveGameCardArea.transform.childCount > 0)
         {
@@ -88,5 +95,21 @@ public class GameDeck : MonoBehaviour
         gameDeck.RemoveAt(0);
         int numberOfCardInGameDeck = gameDeck.Count;
         OnNewCardToBeat?.Invoke(card, numberOfCardInGameDeck);
-    }    
+    }
+
+    private void DiscardGameDeck()
+    {
+        for (int i = gameDeck.Count - 1; i >= 0; i--)
+        {
+            DestroyImmediate(gameDeck[i].gameObject);
+            gameDeck.RemoveAt(i);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        GameStateManager.OnInitiateDiscardPhase -= DiscardActiveCard;
+        GameStateManager.OnGameDidEnd -= DiscardActiveCard;
+        GameStateManager.OnGameDidEnd -= DiscardGameDeck;
+    }
 }

@@ -23,6 +23,8 @@ public class PlayfieldManager : MonoBehaviour
     {
         DragAndDropCards.OnNewCardInPlayArea += HandleNewCardInPlayArea;
         GameStateManager.OnInitiateDiscardPhase += DiscardPlayArea;
+        GameStateManager.OnGameDidEnd += DiscardPlayArea;
+        GameStateManager.OnGameDidEnd += DiscardHand;
     }
     private void HandleNewCardInPlayArea(GameObject cardObject)
     {
@@ -51,9 +53,20 @@ public class PlayfieldManager : MonoBehaviour
         }
     }
 
+    public void DiscardHand()
+    {
+        hand.Clear();
+        while (playerHandArea.transform.childCount > 0)
+        {
+            DestroyImmediate(playerHandArea.transform.GetChild(0).gameObject);
+        }
+    }
+
     private void OnDestroy()
     {
         DragAndDropCards.OnNewCardInPlayArea -= HandleNewCardInPlayArea;
         GameStateManager.OnInitiateDiscardPhase -= DiscardPlayArea;
+        GameStateManager.OnGameDidEnd -= DiscardPlayArea;
+        GameStateManager.OnGameDidEnd -= DiscardHand;
     }
 }

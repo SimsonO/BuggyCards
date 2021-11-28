@@ -29,7 +29,7 @@ public class GameStateManager : MonoBehaviour
 
     private GameObject playfield;
 
-    private int roundCounter = 0;
+    private int roundCounter;
 
     private bool gameActive = false;
 
@@ -37,6 +37,10 @@ public class GameStateManager : MonoBehaviour
     //Event that will be broadcast whenever Cards from last Round should be discarded
     public delegate void InitiateDiscardPhase();
     public static event InitiateDiscardPhase OnInitiateDiscardPhase;
+
+    //Event that will be broadcast whenever a Game did end
+    public delegate void GameDidEnd();
+    public static event GameDidEnd OnGameDidEnd;
 
     private void Awake()
     {   
@@ -50,7 +54,6 @@ public class GameStateManager : MonoBehaviour
         ResultChecker.OnActiveCardSurpassed += StartNewRound;
         ResultChecker.OnGameLost += InitiateGameLoss;
         ResultChecker.OnGameWon += InitiateGameWin;
-        PlayerDeck.OnGameLost += InitiateGameLoss; 
     }
 
     public void StartTheGame()
@@ -60,12 +63,12 @@ public class GameStateManager : MonoBehaviour
         playerDeck.DrawNextXCards(startHandSize);
         gameDeck.ActivateNextCard();
         gameActive = true;
+        roundCounter = 0;
     }
 
     private void StartNewRound()
     {
         OnInitiateDiscardPhase?.Invoke();
-        gameDeck.DiscardActiveCard();
         gameDeck.ActivateNextCard();
         playerDeck.DrawNextXCards(1);
         roundCounter++;
@@ -73,8 +76,7 @@ public class GameStateManager : MonoBehaviour
         {
             StartCoroutine(LetTheBugsOut());
         }
-    }
-     
+    }     
 
     IEnumerator LetTheBugsOut()
     {
@@ -98,6 +100,7 @@ public class GameStateManager : MonoBehaviour
     {
         gameActive = false;
         Debug.Log("you lost the game");
+        OnGameDidEnd?.Invoke();
         //TODO:
         //show loose screen
         //wrap up game
@@ -106,6 +109,7 @@ public class GameStateManager : MonoBehaviour
     {
         gameActive = false;
         Debug.Log("You won the Game");
+        OnGameDidEnd?.Invoke();
         //TODO:
         //show win screen
         //wrap up game
@@ -116,6 +120,5 @@ public class GameStateManager : MonoBehaviour
         ResultChecker.OnActiveCardSurpassed -= StartNewRound;
         ResultChecker.OnGameLost -= InitiateGameLoss;
         ResultChecker.OnGameWon -= InitiateGameWin;
-        PlayerDeck.OnGameLost -= InitiateGameLoss;
     }
 }

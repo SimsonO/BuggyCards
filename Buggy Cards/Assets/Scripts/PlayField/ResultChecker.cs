@@ -4,6 +4,7 @@ public class ResultChecker
     private int numberOfCardsInGameDeck;
     private int valueInPlayArea;
     private int valueCardToBeat;
+    private bool deckEmpty;
 
     private List<Card> cardsInPlayArea;
     private Card cardTobeat;
@@ -12,6 +13,9 @@ public class ResultChecker
     {
         this.cardsInPlayArea = cardsInPlayArea;
         GameDeck.OnNewCardToBeat += UpdateGameValues;
+        PlayerDeck.OnDeckEmtpy += SetDeckEmptyTrue;
+        GameStateManager.OnGameDidEnd += SetDeckEmptyFalse;
+
     }
 
     //Event that will be broadcast whenever active Card is surpassed but Game is not won
@@ -31,6 +35,16 @@ public class ResultChecker
         this.numberOfCardsInGameDeck = numberOfCardsInGameDeck;
         cardTobeat = card;
     }
+
+    private void SetDeckEmptyTrue()
+    {
+        deckEmpty = true;
+    }
+
+    private void SetDeckEmptyFalse()
+    {
+        deckEmpty = false;
+    }
     public void CheckForEndOfRound(int numberOfCardsInHand)
     {
         valueInPlayArea = 0;
@@ -43,7 +57,15 @@ public class ResultChecker
 
         if (valueInPlayArea > valueCardToBeat && numberOfCardsInGameDeck > 0)
         {
-            OnActiveCardSurpassed?.Invoke();
+            if(numberOfCardsInHand >0 || !deckEmpty)
+            {
+                OnActiveCardSurpassed?.Invoke();
+            }
+            else
+            {
+                OnGameLost?.Invoke();
+            }
+           
         }
         else if(valueInPlayArea > valueCardToBeat && numberOfCardsInGameDeck == 0)
         {
@@ -54,6 +76,8 @@ public class ResultChecker
             OnGameLost?.Invoke();
         }
     }
+
+
 
 
 

@@ -15,15 +15,19 @@ public class PlayerDeck : MonoBehaviour
     [SerializeField]
     private int minDeckSum;
 
-    //Event that will be broadcast whenever active Card is not surpassed and Hand is empty -> game is lost
-    public delegate void GameLost();
-    public static event GameLost OnGameLost;
+    //Event that will be broadcast whenever no more Card can be Drawn
+    public delegate void DeckEmtpy();
+    public static event DeckEmtpy OnDeckEmtpy;
 
     void Awake()
     {
         numberOfGameCardsInDB = cardDB.PlayerCards.Count;
         playerDeck = new List<GameObject>();
         postitionFirstCard = this.transform.position;
+    }
+    private void Start()
+    {
+        GameStateManager.OnGameDidEnd += DiscardDeck;
     }
     public void GeneratePlayerDeck(int deckSize)
     {
@@ -87,23 +91,49 @@ public class PlayerDeck : MonoBehaviour
         }
         else
         {
-            OnGameLost?.Invoke();
+            OnDeckEmtpy?.Invoke();
         }
         
     }
-    public int GetNumberOfCardsInPlayerDeck()
+    public bool IsEmpty()
     {
-        return playerDeck.Count;
+
+        if (playerDeck.Count > 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     public GameObject GetCardToBeEatenByBug()
     {
         int i = Random.Range(0, playerDeck.Count - 1);
         GameObject card = playerDeck[i];
-        playerDeck.Remove(card);                
+        playerDeck.Remove(card);
+        if (playerDeck.Count <= 0)
+        {
+            OnDeckEmtpy?.Invoke();
+        }
         return card; 
     }
 
-    
+    private void DiscardDeck()
+    {
+        for (int i = playerDeck.Count - 1; i >= 0; i--)
+        {
+            DestroyImmediate(playerDeck[i].gameObject);
+            playerDeck.RemoveAt(i);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        GameStateManager.OnGameDidEnd -= DiscardDeck;
+    }
+
+
 
 }

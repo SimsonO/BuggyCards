@@ -7,14 +7,44 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private GameObject startMenu;
+    [SerializeField]
+    private GameObject victoryScreen;
+    [SerializeField]
+    private GameObject defeatScreen;
 
-    public void deactivateStartMenu()
+    private void Awake()
+    {
+        ResultChecker.OnGameWon += ActivateVictoryScreen;
+        ResultChecker.OnGameLost += ActivateDefeatScreen;
+    }
+
+    public void DeactivateStartMenu()
     {
         startMenu.SetActive(false);
     }
 
-    public void activateStartMenu()
+    private void ActivateVictoryScreen()
     {
-        startMenu.SetActive(true);
+        victoryScreen.SetActive(true);
+    }
+
+    public void DeActivateVictoryScreen()
+    {
+        victoryScreen.SetActive(false);
+    }
+    private void ActivateDefeatScreen()
+    {
+        defeatScreen.SetActive(true);
+    }
+
+    public void DeActivateDefeatScreen()
+    {
+        defeatScreen.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        ResultChecker.OnGameWon -= ActivateVictoryScreen;
+        ResultChecker.OnGameLost -= ActivateDefeatScreen;
     }
 }

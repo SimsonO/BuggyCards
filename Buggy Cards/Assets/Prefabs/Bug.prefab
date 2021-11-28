@@ -90,8 +90,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef97f3a65419bc3489b4b27ddd3460ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToMoveToDeck: 6
-  timeToLeavePlayfield: 8
+  timeToMoveToDeck: 7
+  timeToLeavePlayfield: 9
   timeToMoveToCard: 0.5
   bugCrawl: {fileID: 8300000, guid: 4c3a4f53e4989c446a40b16ed0166019, type: 3}
   bugEat: {fileID: 8300000, guid: 49fc02d6a8fb4734c830de7e2d55358e, type: 3}

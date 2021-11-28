@@ -49,13 +49,13 @@ public class BugController : MonoBehaviour
 
     private void ChooseCardAndEatIt()
     {
-        if(deck.GetNumberOfCardsInPlayerDeck() >0)
+        if(!deck.IsEmpty())
         {
             GameObject card = deck.GetCardToBeEatenByBug();
             transform.DOMove(card.transform.position, timeToMoveToCard, false).OnComplete(() => EatCard(card));            
         }
         else
-        {
+        {            
             LeaveThePlayfield();
         }
 
@@ -74,9 +74,9 @@ public class BugController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, 180);
         transform.DOMove(leavePosition, timeToLeavePlayfield, false).OnComplete(DestroyBug);
     }
-
     private void DestroyBug()
     {
         Destroy(this.gameObject);
     }
+
 }
