@@ -5,8 +5,13 @@ public class GameDeck : MonoBehaviour
 {
     [SerializeField]
     private GameObject ActiveGameCardArea;
+    [SerializeField]
+    private GameObject playfield;
+    [SerializeField]
+    private GameObject starpostionActivateGameCard;
 
     private List<GameObject> gameDeck;
+
 
     [SerializeField]
     private CardDatabase cardDB;
@@ -89,9 +94,12 @@ public class GameDeck : MonoBehaviour
 
     public void ActivateNextCard()
     {
-        CardDisplay display = gameDeck[0].GetComponent<CardDisplay>();
+        GameObject cardObject = gameDeck[0];
+        CardDisplay display = cardObject.GetComponent<CardDisplay>();
         Card card = display.GetCard();
-        gameDeck[0].transform.SetParent(ActiveGameCardArea.transform, false);        
+        cardObject.transform.SetParent(playfield.transform, false);
+        cardObject.transform.position = starpostionActivateGameCard.transform.position;
+        cardObject.GetComponent<ActivateGameCardTween>().StartActivateCardTween();  
         gameDeck.RemoveAt(0);
         int numberOfCardInGameDeck = gameDeck.Count;
         OnNewCardToBeat?.Invoke(card, numberOfCardInGameDeck);

@@ -9,6 +9,12 @@ public class PlayerDeck : MonoBehaviour
     [SerializeField]
     private Vector3 offsetCards = new Vector3(40, -40, 0);
 
+    private AudioSource deckAudio;
+    [SerializeField]
+    private AudioClip cardDraw;
+    [SerializeField]
+    private AudioClip bugEat;
+
     [SerializeField]
     private CardDatabase cardDB;
     private int numberOfGameCardsInDB;
@@ -28,6 +34,7 @@ public class PlayerDeck : MonoBehaviour
     private void Start()
     {
         GameStateManager.OnGameDidEnd += DiscardDeck;
+        deckAudio = GetComponent<AudioSource>();
     }
     public void GeneratePlayerDeck(int deckSize)
     {
@@ -87,6 +94,7 @@ public class PlayerDeck : MonoBehaviour
                 GameObject card = playerDeck[i];
                 card.GetComponent<DrawPlayerCardTween>().StartCardDrawTween();
                 playerDeck.Remove(card);
+                deckAudio.PlayOneShot(cardDraw);
             }
         }
         else
@@ -113,6 +121,7 @@ public class PlayerDeck : MonoBehaviour
         int i = Random.Range(0, playerDeck.Count - 1);
         GameObject card = playerDeck[i];
         playerDeck.Remove(card);
+        deckAudio.PlayOneShot(bugEat);
         if (playerDeck.Count <= 0)
         {
             OnDeckEmtpy?.Invoke();

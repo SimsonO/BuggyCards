@@ -16,11 +16,7 @@ public class BugController : MonoBehaviour
     [SerializeField]
     private float timeToMoveToCard;
 
-    private AudioSource bugAudio;
-    [SerializeField]
-    private AudioClip bugCrawl;
-    [SerializeField]
-    private AudioClip bugEat;
+    private AudioSource bugAudio;    
 
     private Sequence moveToDeck;
     private Sequence moveToCard;
@@ -63,7 +59,6 @@ public class BugController : MonoBehaviour
 
     private void EatCard(GameObject card)
     {
-        bugAudio.PlayOneShot(bugEat);
         //StartPArticles
         Destroy(card);
         LeaveThePlayfield();

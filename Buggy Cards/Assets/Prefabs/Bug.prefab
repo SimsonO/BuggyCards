@@ -93,8 +93,6 @@ MonoBehaviour:
   timeToMoveToDeck: 7
   timeToLeavePlayfield: 9
   timeToMoveToCard: 0.5
-  bugCrawl: {fileID: 8300000, guid: 4c3a4f53e4989c446a40b16ed0166019, type: 3}
-  bugEat: {fileID: 8300000, guid: 49fc02d6a8fb4734c830de7e2d55358e, type: 3}
 --- !u!82 &5500811177014961924
 AudioSource:
   m_ObjectHideFlags: 0
@@ -107,7 +105,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 4c3a4f53e4989c446a40b16ed0166019, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.472
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0

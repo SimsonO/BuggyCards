@@ -608,6 +608,51 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -600}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &203509858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 203509859}
+  - component: {fileID: 203509860}
+  m_Layer: 0
+  m_Name: startPositonActivateCardTween
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &203509859
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203509858}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2024416643}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1251, y: 1018}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &203509860
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203509858}
+  m_CullTransparentMesh: 1
 --- !u!1 &235982040
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,7 +666,7 @@ GameObject:
   - component: {fileID: 235982044}
   m_Layer: 0
   m_Name: ActiveGameCardArea
-  m_TagString: Untagged
+  m_TagString: ActiveCardArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1072,7 +1117,6 @@ MonoBehaviour:
   deckSize: 8
   gameDeckSize: 5
   startHandSize: 4
-  cardDB: {fileID: 11400000, guid: 27f1fbd09f7c93d4dae213b248d47f00, type: 2}
   timeUntilNextBug: 10
   bugPrefab: {fileID: 3818517486729697274, guid: 483124710d972b042891cde6f1a7e8cd, type: 3}
   startPositionBug: {fileID: 2044407153}
@@ -2467,8 +2511,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -10.0916, y: 14.2547}
-  m_SizeDelta: {x: 4065.3657, y: 2276.0352}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 9168.904, y: 3987.841}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1432919860
 MonoBehaviour:
@@ -2592,6 +2636,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActiveGameCardArea: {fileID: 235982040}
+  playfield: {fileID: 2024416639}
+  starpostionActivateGameCard: {fileID: 203509858}
   cardDB: {fileID: 11400000, guid: 27f1fbd09f7c93d4dae213b248d47f00, type: 2}
   maxDeckSum: 35
 --- !u!1 &1635848952
@@ -2638,6 +2684,7 @@ GameObject:
   - component: {fileID: 1874084543}
   - component: {fileID: 1874084545}
   - component: {fileID: 1874084546}
+  - component: {fileID: 1874084547}
   m_Layer: 0
   m_Name: Deck
   m_TagString: Untagged
@@ -2687,8 +2734,106 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   postitionFirstCard: {x: 0, y: 0, z: 0}
   offsetCards: {x: 40, y: -25, z: 0}
+  cardDraw: {fileID: 8300000, guid: 87227eb117819264ba76a7bfb65be81d, type: 3}
+  bugEat: {fileID: 8300000, guid: 49fc02d6a8fb4734c830de7e2d55358e, type: 3}
   cardDB: {fileID: 11400000, guid: 27f1fbd09f7c93d4dae213b248d47f00, type: 2}
-  minDeckSum: 40
+  minDeckSum: 45
+--- !u!82 &1874084547
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874084542}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1907696793
 GameObject:
   m_ObjectHideFlags: 0
@@ -2725,8 +2870,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 288.3651}
-  m_SizeDelta: {x: 1080, y: 512}
+  m_AnchoredPosition: {x: 0, y: 325.94287}
+  m_SizeDelta: {x: 840, y: 340}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1907696796
 CanvasRenderer:
@@ -2784,7 +2929,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1080, y: 512}
+  m_Size: {x: 840, y: 340}
   m_EdgeRadius: 0
 --- !u!1 &1909731001
 GameObject:
@@ -3267,6 +3412,7 @@ RectTransform:
   - {fileID: 202417357}
   - {fileID: 2044407154}
   - {fileID: 1098049275}
+  - {fileID: 203509859}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

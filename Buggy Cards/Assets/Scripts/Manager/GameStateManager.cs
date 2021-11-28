@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameStateManager : MonoBehaviour
@@ -13,9 +12,6 @@ public class GameStateManager : MonoBehaviour
 
     [SerializeField]
     private int startHandSize = 3;
-
-    [SerializeField]
-    private CardDatabase cardDB;
 
     [SerializeField]
     private float timeUntilNextBug;
@@ -100,7 +96,9 @@ public class GameStateManager : MonoBehaviour
     {
         gameActive = false;
         Debug.Log("you lost the game");
+        StopCoroutine(LetTheBugsOut());
         OnGameDidEnd?.Invoke();
+
         //TODO:
         //show loose screen
         //wrap up game
@@ -109,6 +107,7 @@ public class GameStateManager : MonoBehaviour
     {
         gameActive = false;
         Debug.Log("You won the Game");
+        StopCoroutine(LetTheBugsOut());
         OnGameDidEnd?.Invoke();
         //TODO:
         //show win screen
