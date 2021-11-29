@@ -1,14 +1,19 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {    
     private PlayerDeck playerDeck;
     [SerializeField]
     private int deckSize = 6;
+    [SerializeField]
+    private int minDeckSum;
     private GameDeck gameDeck;
     [SerializeField]
     private int gameDeckSize = 4;
+    [SerializeField]
+    private int maxDeckSum;
 
     [SerializeField]
     private int startHandSize = 3;
@@ -54,8 +59,8 @@ public class GameStateManager : MonoBehaviour
 
     public void StartTheGame()
     {
-        playerDeck.GeneratePlayerDeck(deckSize);
-        gameDeck.GenerateGameDeck(gameDeckSize);
+        playerDeck.GeneratePlayerDeck(deckSize, minDeckSum);
+        gameDeck.GenerateGameDeck(gameDeckSize, maxDeckSum);
         playerDeck.DrawNextXCards(startHandSize);
         gameDeck.ActivateNextCard();
         gameActive = true;
@@ -96,7 +101,7 @@ public class GameStateManager : MonoBehaviour
     {
         gameActive = false;
         Debug.Log("you lost the game");
-        StopCoroutine(LetTheBugsOut());
+        StopAllCoroutines();
         OnGameDidEnd?.Invoke();
 
         //TODO:
@@ -107,11 +112,16 @@ public class GameStateManager : MonoBehaviour
     {
         gameActive = false;
         Debug.Log("You won the Game");
-        StopCoroutine(LetTheBugsOut());
+        StopAllCoroutines();
         OnGameDidEnd?.Invoke();
         //TODO:
         //show win screen
         //wrap up game
+    }
+
+    public void LoadPlayfield()
+    {
+        SceneManager.LoadScene("Playfield");
     }
 
     private void OnDestroy()

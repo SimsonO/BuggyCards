@@ -18,7 +18,7 @@ public class PlayerDeck : MonoBehaviour
     [SerializeField]
     private CardDatabase cardDB;
     private int numberOfGameCardsInDB;
-    [SerializeField]
+    
     private int minDeckSum;
 
     //Event that will be broadcast whenever no more Card can be Drawn
@@ -36,8 +36,9 @@ public class PlayerDeck : MonoBehaviour
         GameStateManager.OnGameDidEnd += DiscardDeck;
         deckAudio = GetComponent<AudioSource>();
     }
-    public void GeneratePlayerDeck(int deckSize)
+    public void GeneratePlayerDeck(int deckSize, int minDeckSum)
     {
+        this.minDeckSum = minDeckSum;
         List<PlayerCard> deck = new List<PlayerCard>();
         int deckSum = 0;
         for (int i = 0; i < deckSize; i++)
@@ -52,7 +53,7 @@ public class PlayerDeck : MonoBehaviour
         }
         else
         {
-            GeneratePlayerDeck(deckSize);
+            GeneratePlayerDeck(deckSize, minDeckSum);
         }
     }
     private PlayerCard GetRandomCardFromDB()

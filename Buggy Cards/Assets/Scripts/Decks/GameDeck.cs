@@ -17,7 +17,6 @@ public class GameDeck : MonoBehaviour
     private CardDatabase cardDB;
     private int numberOfGameCardsInDB;
 
-    [SerializeField]
     private int maxDeckSum;
 
     //Event that will be broadcast whenever a new Card is set to beat
@@ -37,8 +36,9 @@ public class GameDeck : MonoBehaviour
         GameStateManager.OnGameDidEnd += DiscardGameDeck;
     }
 
-    public void GenerateGameDeck(int deckSize)
+    public void GenerateGameDeck(int deckSize, int maxDeckSum)
     {
+        this.maxDeckSum = maxDeckSum;
         List<GameCard> deck = new List<GameCard>();
         int deckSum = 0;
         for (int i = 0; i < deckSize; i++)
@@ -53,7 +53,7 @@ public class GameDeck : MonoBehaviour
         }
         else
         {
-            GenerateGameDeck(deckSize);
+            GenerateGameDeck(deckSize, maxDeckSum);
         }
     }
 
